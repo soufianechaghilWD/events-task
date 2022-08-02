@@ -3,7 +3,7 @@ import Event from "../models/event.model"
 import {omit} from "lodash"
 
 // add new events to the database (only admin)
-export const addNewEvent = async (req: Request, res: Response) => {
+export const AddNewEvent = async (req: Request, res: Response) => {
 
     let eventData = req.body
 
@@ -13,7 +13,8 @@ export const addNewEvent = async (req: Request, res: Response) => {
             message: "Invalid Admin credentials"
         })
 
-        eventData.date = new Date(eventData.date)
+        if(typeof(eventData.date) === "string") eventData.date = new Date(eventData.date)
+        
         eventData = omit(eventData, "adminCred")
 
         const event = await Event.create(eventData)
@@ -34,7 +35,7 @@ export const addNewEvent = async (req: Request, res: Response) => {
 
 }
 
-export const getEvents = async (req: Request, res: Response) => {
+export const GetEvents = async (req: Request, res: Response) => {
     try{
         
         const events = await Event.find({})

@@ -1,7 +1,7 @@
 import User from '../models/user.model'
 import {omit} from "lodash"
 
-const validateUser = async (email: string, password: string) => {
+const ValidateUser = async (email: string, password: string) => {
     
     const user = await User.findOne({email}) 
     
@@ -15,4 +15,4 @@ const validateUser = async (email: string, password: string) => {
 
 }
 
-export default validateUser
+export default ValidateUser
