@@ -18,4 +18,4 @@ const eventSchema = new Schema<Ievent>({
     type: {type: String, required: true, enum: ["EDM", "Techno", "Hip-Hop"] }
 })
 
-export default model<Ievent>('User', eventSchema);
+export default model<Ievent>('Event', eventSchema);
