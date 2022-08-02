@@ -2,6 +2,7 @@ import {Request, Response} from "express"
 import Event from "../models/event.model"
 import {omit} from "lodash"
 
+// add new events to the database (only admin)
 export const addNewEvent = async (req: Request, res: Response) => {
 
     let eventData = req.body
@@ -24,7 +25,6 @@ export const addNewEvent = async (req: Request, res: Response) => {
         }) 
 
     }catch(e){
-        console.log("yooo", e)
         return res.status(400).json({
             status: false,
             message: "Invalid request",
@@ -32,4 +32,23 @@ export const addNewEvent = async (req: Request, res: Response) => {
         })
     }
 
+}
+
+export const getEvents = async (req: Request, res: Response) => {
+    try{
+        
+        const events = await Event.find({})
+
+        return res.status(200).json({
+            status: true,
+            message: "successfully got all the events",
+            data: events
+        })
+
+    }catch(e){
+        return res.status(400).json({
+            status: false,
+            message: "Could not get the events"
+        })
+    }
 }
