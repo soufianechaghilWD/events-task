@@ -6,7 +6,8 @@ interface IUser {
     name: string;
     email: string;
     password: string;
-    events: [Types.ObjectId] | []
+    events: [Types.ObjectId] | [];
+    comparePassword(candidate: string): Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser>({
@@ -29,5 +30,12 @@ userSchema.pre('save', async function (next) {
     return next()
 
 })
+
+userSchema.methods.comparePassword = async function (candidate: string) {
+    const user = this as IUser
+
+    return bcrypt.compare(candidate, user.password).catch((e) => false)
+}
+
 
 export default model<IUser>('User', userSchema);
