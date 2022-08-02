@@ -1,0 +1,5 @@
+# ignore dependencies package
+/node_modules
+
+# ignore build folders
+/dist
