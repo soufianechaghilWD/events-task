@@ -19,7 +19,7 @@ const userSchema = new Schema<IUser>({
 
 userSchema.pre('save', async function (next) {
 
-    let user = this as IUser
+    let user = this
 
     if(!user.isModified("password")) return next()
 

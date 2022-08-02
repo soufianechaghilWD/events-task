@@ -8,7 +8,7 @@ const VerifyJWT = async (req: Request, res: Response, next: NextFunction) => {
   if (!token)
     return res.status(401).json({ message: "token is missing", status: false });
 
-  jwt.verify(token, "JwtSecret", (err, decode) => {
+  jwt.verify(token, "JwtSecret", (err: any, decode: any) => {
     if (err) return res.status(401).json({ message: "Invalid token" });
 
     req.cookies = decode;

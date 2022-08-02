@@ -4,6 +4,7 @@ import { omit } from "lodash";
 import ValidateUser from "../validators/validateUser";
 import IsEventSaved from "../validators/validateIfEventSaved";
 import jwt from "jsonwebtoken";
+import mongoose from 'mongoose'
 
 export const SignUp = async (req: Request, res: Response) => {
   
@@ -86,7 +87,7 @@ export const AddEvent = async (req: Request, res: Response) => {
     // add the event to the events list
     const updated = await User.updateOne(
       { email },
-      { $push: { events: [eventId] } }
+      {$addToSet: {events: new mongoose.Types.ObjectId(eventId)}}
     );
 
     if (updated.modifiedCount === 0)
@@ -95,7 +96,7 @@ export const AddEvent = async (req: Request, res: Response) => {
         message: "Could not add the event",
       });
 
-    return res.status(204).json({ status: true, message: "Event saved" });
+    return res.status(201).json({ status: true, message: "Event saved" });
 
   } catch (e) {
     return res.status(400).json({
@@ -139,7 +140,7 @@ export const RemoveEvent = async (req: Request, res: Response) => {
         message: "Could not remove the event",
       });
 
-    return res.status(204).json({ status: true, message: "Event removed" });
+    return res.status(201).json({ status: true, message: "Event removed" });
 
   } catch (e) {
 
